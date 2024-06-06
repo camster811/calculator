@@ -15,29 +15,42 @@ const decimal = document.getElementById('decimal');
 function operate(operation, num1, num2) {
     switch (operation) {
         case '+':
-            return add(num1, num2);
+            return String(add(num1, num2)).slice(0, 12);
         case '-':
-            return sub(num1, num2);
+            return String(sub(num1, num2)).slice(0, 12);
         case 'x':
-            return mult(num1, num2);
+            return String(mult(num1, num2)).slice(0, 12);
         case '/':
-            return divide(num1, num2);
+            return String(divide(num1, num2)).slice(0, 12);
         default:
-            break;
+            return firstNum;
     }
 }
 
 decimal.addEventListener('click', () => {
-    equalsClicked = false;
-    if (!(display.textContent.includes('.'))) {
-        display.textContent += '.';
+    if (equalsClicked) {
+        equalsClicked = false;
+        firstNum = 0;
+        operator = '';
+        display.textContent = '';
+        display.textContent = '.';
+    } else {
+        if (!(display.textContent.includes('.'))) {
+            display.textContent += '.';
+        }
     }
-})
+});
 
 pct.addEventListener('click', () => {
-    equalsClicked = false;
-    firstNum = display.textContent;
-    display.textContent = firstNum / 100;
+    if (equalsClicked) {
+        equalsClicked = false;
+        firstNum = display.textContent / 100;;
+        secondNum = 0;
+        operator = '';
+        display.textContent = firstNum;
+    } else {
+        display.textContent = display.textContent / 100;
+    }
 });
 
 del.addEventListener('click', () => {
@@ -90,7 +103,6 @@ for (let i = 0; i < operatorButtons.length; i++) {
         } else {
             operatorClicked = true;
             firstNum = display.textContent;
-            console.log(firstNum);
             operator = operatorButtons[i].id;
             display.textContent = '';
         }
