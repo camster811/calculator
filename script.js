@@ -30,7 +30,6 @@ function operate(operation, num1, num2) {
 decimal.addEventListener('click', () => {
     if (equalsClicked) {
         equalsClicked = false;
-        firstNum = 0;
         operator = '';
         display.textContent = '';
         display.textContent = '.';
@@ -69,6 +68,7 @@ clearAll.addEventListener('click', () => {
 equal.addEventListener('click', () => {
     operatorClicked = false;
     if (equalsClicked) {
+        operator = '';
         display.textContent = result;
         firstNum = result;
         secondNum = 0;
@@ -77,6 +77,7 @@ equal.addEventListener('click', () => {
         result = operate(operator, Number(firstNum), Number(secondNum));
         display.textContent = result
         equalsClicked = true;
+        operator = '';
     }
 });
 
@@ -99,12 +100,13 @@ for (let i = 0; i < operatorButtons.length; i++) {
             secondNum = display.textContent;
             firstNum = operate(operator, Number(firstNum), Number(secondNum));
             display.textContent = '';
-            equalsClicked = true;
+            equalsClicked = true;  
         } else {
             operatorClicked = true;
             firstNum = display.textContent;
             operator = operatorButtons[i].id;
             display.textContent = '';
+            equalsClicked = false;
         }
     })  
 }
