@@ -49,13 +49,22 @@ clearAll.addEventListener('click', () => {
     secondNum = null;
     operator = null;
     display.textContent = '';
+    equalsClicked = false;
+    operatorClicked = false;
 });
 
 equal.addEventListener('click', () => {
-    secondNum = display.textContent;
-    console.log(secondNum);
-    display.textContent = operate(operator, Number(firstNum), Number(secondNum));
-    equalsClicked = true;
+    operatorClicked = false;
+    if (equalsClicked) {
+        display.textContent = result;
+        firstNum = result;
+        secondNum = 0;
+    } else {
+        secondNum = display.textContent;
+        result = operate(operator, Number(firstNum), Number(secondNum));
+        display.textContent = result
+        equalsClicked = true;
+    }
 });
 
 
@@ -74,10 +83,9 @@ for (let i = 0; i < numberButtons.length; i++) {
 for (let i = 0; i < operatorButtons.length; i++) {
     operatorButtons[i].addEventListener('click', () => {
         if (operatorClicked) {
-            operatorClicked = false;
             secondNum = display.textContent;
             firstNum = operate(operator, Number(firstNum), Number(secondNum));
-            display.textContent = firstNum;
+            display.textContent = '';
             equalsClicked = true;
         } else {
             operatorClicked = true;
