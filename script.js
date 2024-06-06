@@ -2,6 +2,7 @@ let firstNum;
 let secondNum;
 let operator;
 let equalsClicked = false;
+let operatorClicked = false;
 const display = document.querySelector('p');
 const numberButtons = document.querySelectorAll('.number')
 const operatorButtons = document.querySelectorAll('.operator')
@@ -52,6 +53,7 @@ clearAll.addEventListener('click', () => {
 
 equal.addEventListener('click', () => {
     secondNum = display.textContent;
+    console.log(secondNum);
     display.textContent = operate(operator, Number(firstNum), Number(secondNum));
     equalsClicked = true;
 });
@@ -71,10 +73,20 @@ for (let i = 0; i < numberButtons.length; i++) {
 }
 for (let i = 0; i < operatorButtons.length; i++) {
     operatorButtons[i].addEventListener('click', () => {
-        firstNum = display.textContent;
-        operator = operatorButtons[i].id;
-        display.textContent = '';
-    })
+        if (operatorClicked) {
+            operatorClicked = false;
+            secondNum = display.textContent;
+            firstNum = operate(operator, Number(firstNum), Number(secondNum));
+            display.textContent = firstNum;
+            equalsClicked = true;
+        } else {
+            operatorClicked = true;
+            firstNum = display.textContent;
+            console.log(firstNum);
+            operator = operatorButtons[i].id;
+            display.textContent = '';
+        }
+    })  
 }
 
 
